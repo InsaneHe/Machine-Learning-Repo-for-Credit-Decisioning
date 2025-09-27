@@ -1,1 +1,7 @@
 # Machine-Learning-Repo-for-Credit-Decisioning
+
+# Introduction
+## This is a machine learning project for credit decisioning for banks or other financial institutions and in this project, we will use machine learning models for classification. 
+
+# Authors and collaboration-related issues
+## We both major in MSc Financial Engineering of the University of Glasgow🥇, so if you are interested in this project and provide some suggestions or want to join us, please do not hesitate to send email to Hezhengjie2023@gmail.com or wangyiqiaonn@outlook.com, or you can set up an issue here, we are open to discussions! Many thanks!👍:)
