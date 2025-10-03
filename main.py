@@ -9,7 +9,12 @@ import warnings
 warnings.filterwarnings('ignore') # Ignore specific warnings
 
 # Data reading and data preprocessing
-data = pd.read_csv("")  # Here we need to fill in the path of the csv file we want to read
+# Setting data path
+data_path = \
+    r"D:\PythonProjects\Github - Machine Learning Project for Credit Decisioning\Machine-Learning-Repo-for-Credit-Decisioning\Data\loan_data_2007_2014.csv"
+
+# Read the data
+data = pd.read_csv(data_path)  # Here we need to fill in the path of the csv file we want to read
 
 # Partitioning the dataset and training set
 np.random.seed(123)  # Using random seed 123
