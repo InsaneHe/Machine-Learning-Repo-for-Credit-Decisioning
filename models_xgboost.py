@@ -90,7 +90,7 @@ grid.fit(X_train, y_train)  # 这两个参数在main.py中
 
 print("最优参数组合：", grid.best_params_)  # print the best combination of parameters
 
-"""以下可以选择使用（去掉注释即可使用）
+"""以下可以选择使用（去掉注释可使用）
 # ---------------- 7. 构建最终模型 ----------------
 final_model = xgb.XGBClassifier(
     objective="binary:logistic",
