@@ -26,5 +26,6 @@ y = data["label"]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=test_size, stratify=y, random_state=123)
 
+if __name__ == "__main__":
 
 
