@@ -67,7 +67,54 @@ param_grid = {
 }
 
 # Parameter tuning
+# 5 threshold cross-validation, repeat 3 times (GridSearchCV has no repeats parameter, we can use RepeatedStratifiedKFold to achieve that)
+cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=123)
 
+xgb_model = xgb.XGBClassifier(
+    objective="binary:logistic",
+    booster="gbtree",
+    eval_metric="logloss",
+    use_label_encoder=False,
+    random_state=123
+)
+
+grid = GridSearchCV(  # 不明原因报错
+    estimator=xgb_model,
+    param_grid=param_grid,
+    cv=cv,
+    scoring="accuracy",
+    n_jobs=-1,
+    verbose=1
+)
+grid.fit(X_train, y_train)  # 这两个参数在main.py中
+
+print("最优参数组合：", grid.best_params_)  # print the best combination of parameters
+
+"""以下可以选择使用（去掉注释即可使用）
+# ---------------- 7. 构建最终模型 ----------------
+final_model = xgb.XGBClassifier(
+    objective="binary:logistic",
+    booster="gbtree",
+    n_estimators=grid.best_params_["n_estimators"],
+    max_depth=grid.best_params_["max_depth"],
+    learning_rate=grid.best_params_["learning_rate"],
+    gamma=grid.best_params_["gamma"],
+    eval_metric="logloss",
+    use_label_encoder=False,
+    random_state=123
+)
+final_model.fit(X_train, y_train)
+
+# ---------------- 8. 在测试集上进行预测 ----------------
+# 返回类别标签（0/1）
+pred_labels = final_model.predict(X_test)
+
+# ---------------- 9. 模型评估 ----------------
+print("混淆矩阵：")
+print(confusion_matrix(y_test, pred_labels))
+print("\n分类报告：")
+print(classification_report(y_test, pred_labels))
+"""
 
 # Model training
 
