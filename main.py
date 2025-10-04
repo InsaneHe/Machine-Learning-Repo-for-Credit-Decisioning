@@ -31,7 +31,7 @@ try:
     else:
         df = pd.read_excel(data_path)
 except Exception as e:
-    exit(f"Reading data file failed: {e}")
+    exit(f"Attempt of reading data file failed: {e}")
 
 print("Reading data file succeed!\nThe first 5 lines are:\n")
 print(df.head())
@@ -54,11 +54,12 @@ if __name__ == "__main__":
     model_map = {1: 'Logistic Regression',
                  2: 'Neural Network',
                  3: 'XGBoost'}
+    prompt = ' / '.join(f'{k} {v}' for k, v in model_map.items())
+    # Automatically generate prompt strings that consists of model_map elements
 
     while True:
         try:
-            print("Please enter the number of one of the models to use: ")
-            choice = int(input("(1 Logistic Regression / 2 Neural Network / 3 XGBoost): "))
+            choice = int(input("Please enter the number of one of the models to use:\n{prompt}: "))
             if choice in model_map:
                 Model_to_use = model_map[choice]
                 break
