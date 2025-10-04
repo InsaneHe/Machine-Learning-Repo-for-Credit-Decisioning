@@ -12,7 +12,7 @@ warnings.filterwarnings('ignore') # Ignore specific warnings
 
 # Data reading and data preprocessing
 # Setting data path（我们可以考虑使用MySQL来导入，但在那之前先用接收用户输入的方式设定data_path）
-'''
+''' Data path to use
 data_path = \
     r"D:\PythonProjects\Github - Machine Learning Project for Credit Decisioning\Machine-Learning-Repo-for-Credit-Decisioning\Data\loan_data_2007_2014.csv"
 '''
