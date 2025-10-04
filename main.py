@@ -59,12 +59,21 @@ if __name__ == "__main__":
 
     while True:
         try:
-            choice = int(input("Please enter the number of one of the models to use:\n{prompt}: "))
+            choice = int(input("Please enter the number of the model you want to use:\n{prompt}"))
             if choice in model_map:
-                Model_to_use = model_map[choice]
+                model_to_use = model_map[choice]
                 break
             print("The number is not within the valid range! Please re-enter!\n")
         except ValueError:
             print(f"You must enter a number between 1 and {len(model_map)}. Please try again!\n")
 
-    print("You have selected: ", Model_to_use)
+    print("You have selected: ", model_to_use)
+
+    # 待补充完善，选择模型后的后续措施（要调用其他文件里的模型）
+    if choice == 1:  # After you choose "Logistic Regression"
+
+    elif choice == 2:  # After you choose "Neural Network"
+
+    elif choice == 3:  # After you choose "XGBoost"
+
+    else:
