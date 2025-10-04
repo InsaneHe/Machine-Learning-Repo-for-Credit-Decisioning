@@ -1,4 +1,4 @@
-# This is the file for using functions from other files named as "models_xx.py"
+# This is the main.py file for using functions from other files named "models_xx.py"
 # Package importing and warnings setting
 import pandas as pd
 import numpy as np
@@ -27,5 +27,3 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=test_size, stratify=y, random_state=123)
 
 if __name__ == "__main__":
-
-
