@@ -30,6 +30,38 @@ param_grid = {
 cv = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=123)
 # 5 threshold cross-validation, repeat 3 times (GridSearchCV has no repeats parameter, we can use RepeatedStratifiedKFold to achieve that) 此函数在main.py文件中
 
+# Set different parameters
+# common parameter
+com_param = [
+    ('booster', 'gbtree'),
+    ('silent', 0),
+    ('random_state', 123),
+]
+# booster parameter
+booster_param = [
+    ('eta', 0.1),  # same as learning rete in GBM, The robustness can be enhanced by reducing weight of every step
+    ('min_child_weight', 6),  # avoid overfitting, use CV for adjustment
+    ('max_depth', 4),  # avoid overfitting, use CV for adjustment
+    ('gamma', 0.1),  # the minimum decline value of the loss function required for node splitting. Larger, more conservative
+    ('subsample', 0.8),  #smaller, avoid overfitting
+    ('colsample_bytree', 0.8),  # Used to control the proportion of the number of columns in each random sample (each column is a feature)
+    ('lamba', 2),  # L2 regularization term
+    ('alpha', 1),  # L1 regularization term,
+    ('scale_pos_weight', 6)  # When various samples are highly unbalanced, positive value can make the algorithm converge faster
+]
+
+# Learning objective parameters
+ob_param = [
+    ('objective', 'binary:logistic'),  # 多元： multi:softmax
+    ('eval_metric', 'error'),  # 二分类错误率
+    # ('eval_metric', 'merror'),  # 多分类错误率
+    ('eval_metric', 'logloss'),  # 损失函数
+    ('eval_metric', 'auc'),  # 曲线下面积
+]
+
+final_param = com_param + booster_param + ob_param
+xgb_model = xgb.XGBClassifier(final_param)
+'''
 xgb_model = xgb.XGBClassifier(
     objective="binary:logistic",
     booster="gbtree",
@@ -37,7 +69,7 @@ xgb_model = xgb.XGBClassifier(
     use_label_encoder=False,
     random_state=123
 )
-
+'''
 grid = GridSearchCV(  # 此函数在main.py文件中
     estimator=xgb_model,
     param_grid=param_grid,
