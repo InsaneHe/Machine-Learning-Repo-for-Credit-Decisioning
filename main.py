@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     print("You have selected: ", model_to_use)
 
-    # 待补充完善，选择模型后的后续措施（要调用其他文件里的模型）
+    # TODO: 待补充完善，选择模型后的后续措施（要调用其他文件里的模型）
     if choice == 1:  # After you choose "Logistic Regression"
 
     elif choice == 2:  # After you choose "Neural Network"
