@@ -58,15 +58,22 @@ if __name__ == "__main__":
     # Automatically generate prompt strings that consists of model_map elements
 
     while True:
-        try:
-            choice = int(input("Please enter the number of the model you want to use:\n{prompt}"))
-            if choice in model_map:
-                model_to_use = model_map[choice]
-                break
-            print("The number is not within the valid range! Please re-enter!\n")
-        except ValueError:
-            print(f"You must enter a number between 1 and {len(model_map)}. Please try again!\n")
+        user_input = input(f"Please enter the number of the model you want to use:\n{prompt}\n(Enter 'quit' to quit): ").strip().lower()
+        if user_input == "quit":
+            print("Exit selected, bye!\n")
+            break
 
+        try:
+            choice = int(user_input)
+        except ValueError:
+            print("Invalid input! Please enter a number or 'quit' to quit!\n")
+            continue
+
+        if choice not in model_map:
+            print(f"You must enter a number between 1 and {len(model_map)}. Please try again!\n")
+            continue
+
+    model_to_use = model_map[choice]
     print("You have selected: ", model_to_use)
 
     # TODO: 待补充完善，选择模型后的后续措施（要调用其他文件里的模型）
@@ -77,3 +84,4 @@ if __name__ == "__main__":
     elif choice == 3:  # After you choose "XGBoost"
 
     else:
+        
