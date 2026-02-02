@@ -4,14 +4,12 @@ import pandas as pd
 import numpy as np
 import os
 from pathlib import Path
-from sklearn.model_selection import train_test_split, GridSearchCV, RepeatedStratifiedKFold
-from sklearn.metrics import confusion_matrix, classification_report
 import seaborn as sns
 import matplotlib.pyplot as plt
-import xgboost as xgb
 import warnings
 warnings.filterwarnings('ignore') # Ignore specific warnings
 sns.set()
+from sklearn.model_selection import train_test_split
 # TODO: 以下两行先注释掉，后续运行时可以解开注释以观察效果
 # pd.options.display.max_columns = None
 # pd.options.display.max_rows = None
@@ -23,15 +21,17 @@ data_path_1 = \
     r"D:\PythonProjects\Github - Machine Learning Project for Credit Decisioning\Machine-Learning-Repo-for-Credit-Decisioning\Data\loan_data_2007_2014.csv"
 data_path_2 = \
     r"D:\PythonProjects\Github - Machine Learning Project for Credit Decisioning\Machine-Learning-Repo-for-Credit-Decisioning\Data\Bigger\loan_data_2007_2014_bigger.csv"
+data_path_3 = "loan_data.mysql"  # TODO: Waiting for creating mysql function
 data_path_list = [data_path_1, data_path_2]
 
+# Functions
 def readingData():
-    for data_path in data_path_list:  # Print all the data paths available
-        print(f"The index of the data path ({data_path}): ")
-        print(f"{data_path.index()}\n")
+    for i, data_path in enumerate(data_path_list):  # Print all the data paths available
+        print(f"{i+1}: {data_path}")
 
-    index_chosen = input("Please enter the index of the path you want to choose: ")
-    print(f"You choose {data_path_list[index_chosen]}!\n")
+    index_chosen = int(input("Please enter the index of the path you want to choose: ")) - 1
+    data_path_chosen = data_path_list[index_chosen]
+    print(f"You choose {data_path_chosen}!\n")
 
     while True:
         cancel_or_not = int(input("Do you want to cancel?\n1).No\t2).Yes"))
@@ -45,24 +45,34 @@ def readingData():
             print("Please enter integer 1 (to PROCEED) or 2 (to CANCEL)!\n")
             continue
 
-    if not data_path_list[index_chosen].is_file():  # Check if the data path is a file
-        exit("The file does not exist, the program terminates!\n")
+    chosen_path = Path(data_path_chosen)
+    suffix = chosen_path.suffix.lower()
 
-    suffix = data_path_list[index_chosen].suffix.lower()
-    if suffix in ['.csv', '.xls', '.xlsx']:
-        try:
-            if suffix == '.csv':
-                df = pd.read_csv(data_path, encoding='utf-8-sig')
-            elif suffix == '.xls' or '.xlsx':
-                df = pd.read_excel(data_path)
+    if suffix != '.mysql':
+        if not chosen_path.is_file():  # Check if the data path is a file
+            exit("The file does not exist, the program terminates!\n")
 
-            print("Reading data file succeed!\nThe first 5 lines are:\n")
-            print(df.head())
-        except Exception as e:
-            exit(f"Attempt of reading data file failed: {e}")
-    else:
-        print("This program only accepts csv/xls/xlsx!\n")
+    try:
+        if suffix == '.csv':
+            df = pd.read_csv(chosen_path, encoding='utf-8-sig')
+        elif suffix in ['.xls', '.xlsx']:
+            df = pd.read_excel(chosen_path)
+        elif suffix == '.mysql':  # TODO: This is for the future version of accepting a MySQL file
+            from sqlalchemy import create_engine
 
+            engine = create_engine(
+
+            )
+            sql = "SELECT * FROM tablexxx"
+            df = pd.read_sql(sql, con = engine)
+        else:
+            exit("This program only accepts csv/xls/xlsx!\n")
+
+        print("Reading data file succeed!\nThe first 5 lines are:\n")
+        print(df.head())
+
+    except Exception as e:
+        exit(f"Attempt of reading data file failed: {e}\n")
 
 # Main function
 if __name__ == "__main__":
